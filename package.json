@@ -2,9 +2,12 @@
   "name": "react-easy-slider",
   "version": "1.0.0",
   "description": "react-easy-slider is a slider component of React",
-  "main": "index.js",
+  "main": "dist/react-easy-slider.cjs.js",
+  "module": "dist/react-easy-slider.esm.js",
+  "browser": "dist/react-easy-slider.umd.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup --config",
+    "dev": "rollup --config --watch"
   },
   "repository": {
     "type": "git",
@@ -18,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/ymqy/react-easy-slider/issues"
   },
-  "homepage": "https://github.com/ymqy/react-easy-slider#readme"
+  "homepage": "https://github.com/ymqy/react-easy-slider#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "acorn-jsx": "^5.3.1",
+    "react": "^17.0.2",
+    "rollup": "^2.45.2"
+  }
 }
