@@ -1,6 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve' // 查找 node 模块
-import jsx from 'acorn-jsx';
-import typescript from '@rollup/plugin-typescript' // 用于解析 ts
+import babel from '@rollup/plugin-babel'; // rollup 和 babel 无缝集成
+import commonjs from '@rollup/plugin-commonjs'; // rollup 和 babel 无缝集成
+import postcss from 'rollup-plugin-postcss';
 import pkg from './package.json'
 
 export default {
@@ -14,16 +15,31 @@ export default {
       name: 'ReactEasySlider',
       file: pkg.browser,
       format: 'umd',
+      globals: {
+        'react': 'React',
+      },
     },
     {
       name: 'ReactEasySlider',
       file: pkg.browser.replace(".js", ".min.js"),
       format: 'iife',
+      globals: {
+        'react': 'React',
+      },
     }
   ],
-  acornInjectPlugins: [jsx()], // 用于解析 jsx
+  external: ['react'],
   plugins: [
-    resolve(),
-    typescript({ jsx: 'preserve' })
+    resolve({
+      extensions: ['.tsx'],
+    }),
+    commonjs(),
+    babel({ 
+      extensions: ['.tsx'],
+      babelHelpers: 'bundled',
+    }),
+    postcss({
+      plugins: [],
+    })
   ]
 };
