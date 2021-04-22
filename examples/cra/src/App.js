@@ -1,10 +1,11 @@
-// import { SliderComponent } from 'react-easy-slider';
+import React from 'react';
+import { SliderComponent } from 'react-easy-slider';
 
 function App() {
   return (
     <div className="App">
       11
-      {/* <SliderComponent /> */}
+      <SliderComponent />
     </div>
   );
 }
