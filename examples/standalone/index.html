@@ -14,10 +14,66 @@
   <body>
     <div id="root"></div>
     <script type="text/babel">
-      const { SliderComponent } = ReactEasySlider;
+      const { useState, useEffect, useCallback } = React;
+      const { SliderComponent, SliderItemComponent } = ReactEasySlider;
+
+      const items = [
+        {
+          imgUrl: "https://p5.ssl.qhimg.com/t0119c74624763dd070.png",
+        },
+        {
+          imgUrl: "https://p4.ssl.qhimg.com/t01adbe3351db853eb3.jpg",
+        },
+        {
+          imgUrl: "https://p2.ssl.qhimg.com/t01645cd5ba0c3b60cb.jpg",
+        },
+        {
+          imgUrl: "https://p4.ssl.qhimg.com/t01331ac159b58f5478.jpg",
+        },
+      ];
+
+      const App = () => {
+        const [list, setList] = useState(items);
+        const [activeIndex, setActiveIndex] = useState(0);
+
+        const slideTo = useCallback((idx) => setActiveIndex(idx), []);
+        const slideNext = useCallback(() => {
+          setActiveIndex(index => (index + 1) % list.length)
+        }, []);
+        const slidePrevious = useCallback(() => {
+          setActiveIndex(index => (list.length + index - 1) % list.length)
+        }, []);
+
+        useEffect(() => {
+          const timerID = setInterval(() => {
+            slideNext();
+          }, 3000);
+
+          return () => {
+            clearInterval(timerID);
+          }
+        }, []);
+
+        return (
+          <>
+            <SliderComponent>
+              { 
+                items.map((item, index) => (
+                  <SliderItemComponent
+                    key={index} 
+                    isActived={activeIndex === index}
+                    {...item}
+                  >
+                  </SliderItemComponent>
+                )) 
+              }
+            </SliderComponent>
+          </>
+        );
+      }
 
       ReactDOM.render(
-        <SliderComponent />,
+        <App />,
         document.getElementById('root')
       );
 
