@@ -32,31 +32,62 @@
         },
       ];
 
+      function useTimer(fn, cycle) {
+        const [timer, setTimer] = useState(null);
+        
+        const stop = useCallback(() => clearInterval(timer), [timer]);
+        const start = useCallback(() => {
+          stop();
+          const t = setInterval(fn, cycle);
+          setTimer(t);
+        }, [fn, cycle, stop, setTimer]);
+
+        return [start, stop];
+      }
+
       const App = () => {
         const [list, setList] = useState(items);
+        const [cycle, setCycle] = useState(3000);
         const [activeIndex, setActiveIndex] = useState(0);
-
-        const slideTo = useCallback((idx) => setActiveIndex(idx), []);
+        const [timer, setTimer] = useState(0);
+        
+        const slideTo = useCallback((idx) => {
+          setActiveIndex(idx);
+        }, [setActiveIndex]);
         const slideNext = useCallback(() => {
           setActiveIndex(index => (index + 1) % list.length)
-        }, []);
+        }, [setActiveIndex, list]);
         const slidePrevious = useCallback(() => {
           setActiveIndex(index => (list.length + index - 1) % list.length)
-        }, []);
+        }, [setActiveIndex, list]);
+
+        const [start, stop] = useTimer(slideNext, cycle);
+
+        const handleControlHover = useCallback((idx) => {
+          slideTo(idx);
+          stop();
+        }, [slideTo, timer]);
+        const handleControlOut = useCallback(() => {
+          start();
+        }, [start]);
 
         useEffect(() => {
-          const timerID = setInterval(() => {
-            slideNext();
-          }, 3000);
+          start();
 
           return () => {
-            clearInterval(timerID);
+            stop();
           }
         }, []);
 
         return (
           <>
-            <SliderComponent>
+            <SliderComponent
+              activeIndex={activeIndex}
+              onControlHover={handleControlHover}
+              onControlOut={handleControlOut}
+              onPrevious={slidePrevious}
+              onNext={slideNext}
+            >
               { 
                 items.map((item, index) => (
                   <SliderItemComponent
