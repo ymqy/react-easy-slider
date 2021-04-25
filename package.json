@@ -7,7 +7,15 @@
   "browser": "dist/react-easy-slider.umd.js",
   "scripts": {
     "build": "rollup --config",
-    "dev": "rollup --config --watch"
+    "dev": "rollup --config --watch",
+    "lint": "npm run lint:js && npm run lint:style && npm run lint:prettier",
+    "lint-staged": "lint-staged",
+    "lint-staged:js": "eslint --ext .js,.jsx,.ts,.tsx ",
+    "lint:fix": "eslint --fix --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src && npm run lint:style",
+    "lint:js": "cross-env TIMING=1 eslint --cache --ext .js,.jsx,.ts,.tsx --format=pretty ./src",
+    "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
+    "prettier": "prettier -c --write \"**/*.tsx\""
   },
   "repository": {
     "type": "git",
@@ -28,7 +36,11 @@
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-node-resolve": "^11.2.1",
+    "@types/react": "^17.0.3",
+    "@umijs/fabric": "^2.5.7",
+    "cross-env": "^7.0.3",
     "less": "^4.1.1",
+    "lint-staged": "^10.5.4",
     "react": "^17.0.2",
     "rollup": "^2.45.2",
     "rollup-plugin-postcss": "^4.0.0"
