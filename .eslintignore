@@ -1,0 +1,9 @@
+test/fixtures
+scripts
+.umi
+.umi-production
+.history
+public
+dist
+.umi
+mock
