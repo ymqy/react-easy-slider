@@ -1,4 +1,5 @@
-import React, { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
+import React from 'react';
 import './index.less';
 
 interface Props {
@@ -12,10 +13,10 @@ const SliderItemComponent: FC<Props> = (props) => {
 
   return (
     <li className={`slider-list__item${isActived ? '--selected' : ''}`}>
-      <img src={imgUrl}/>
-      { children }
+      <img src={imgUrl} />
+      {children}
     </li>
-  )
+  );
 };
 
 export default SliderItemComponent;
