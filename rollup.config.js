@@ -31,7 +31,7 @@ export default {
   external: ['react'],
   plugins: [
     resolve({
-      extensions: ['.tsx'],
+      extensions: ['.ts', '.tsx'],
     }),
     commonjs(),
     babel({ 
