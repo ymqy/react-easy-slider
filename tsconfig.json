@@ -18,6 +18,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "strict": true,
+    "declaration": true,
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./src/.umi/*"]
