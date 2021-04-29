@@ -1,0 +1,1 @@
+export { FadeTransition as fade } from './fade-transition';
