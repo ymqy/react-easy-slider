@@ -1,8 +1,16 @@
-import resolve from '@rollup/plugin-node-resolve' // 查找 node 模块
+import resolve from '@rollup/plugin-node-resolve'; // 查找 node 模块
 import babel from '@rollup/plugin-babel'; // rollup 和 babel 无缝集成
 import commonjs from '@rollup/plugin-commonjs'; // rollup 和 babel 无缝集成
-import postcss from 'rollup-plugin-postcss';
-import pkg from './package.json'
+import typescript from '@rollup/plugin-typescript'; // 处理 ts 相关
+import postcss from 'rollup-plugin-postcss'; // 处理 css 预处理器: css module
+
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
+// import postcssImport from "postcss-import";
+// import postcssNested from "postcss-nested";
+// import autoprefixer from "autoprefixer";
+
+import pkg from './package.json';
 
 export default {
   input: 'src/index.ts',
@@ -10,23 +18,26 @@ export default {
     {
       file: pkg.module,
       format: 'es',
+      sourcemap: true,
     },
     {
       name: 'ReactEasySlider',
       file: pkg.browser,
       format: 'umd',
+      sourcemap: true,
       globals: {
-        'react': 'React',
+        react: 'React',
       },
     },
     {
       name: 'ReactEasySlider',
-      file: pkg.browser.replace(".js", ".min.js"),
+      file: pkg.browser.replace('.js', '.min.js'),
       format: 'iife',
+      sourcemap: true,
       globals: {
-        'react': 'React',
+        react: 'React',
       },
-    }
+    },
   ],
   external: ['react'],
   plugins: [
@@ -34,12 +45,16 @@ export default {
       extensions: ['.ts', '.tsx'],
     }),
     commonjs(),
-    babel({ 
-      extensions: ['.tsx'],
+    typescript(),
+    babel({
+      extensions: ['.ts', '.tsx'],
       babelHelpers: 'bundled',
     }),
     postcss({
       plugins: [],
-    })
-  ]
+      modules: true,
+    }),
+    serve(),
+    livereload(),
+  ],
 };
