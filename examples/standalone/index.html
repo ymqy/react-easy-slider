@@ -1,126 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Easy Slider Demo</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-
-    <script src="../../dist/react-easy-slider.umd.min.js" ></script>
-    
-    <!-- Don't use this in production: -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="../../dist/react-easy-slider.umd.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
     <script type="text/babel">
       const { useState, useEffect, useCallback } = React;
-      const { SliderComponent, SliderItemComponent } = ReactEasySlider;
+      const { Slider } = ReactEasySlider;
 
-      const items = [
-        {
-          imgUrl: "https://p5.ssl.qhimg.com/t0119c74624763dd070.png",
-        },
-        {
-          imgUrl: "https://p4.ssl.qhimg.com/t01adbe3351db853eb3.jpg",
-        },
-        {
-          imgUrl: "https://p2.ssl.qhimg.com/t01645cd5ba0c3b60cb.jpg",
-        },
-        {
-          imgUrl: "https://p4.ssl.qhimg.com/t01331ac159b58f5478.jpg",
-        },
-      ];
-
-      function useTimer(fn, cycle) {
-        const [timer, setTimer] = useState(null);
-        
-        const stop = useCallback(() => clearInterval(timer), [timer]);
-        const start = useCallback(() => {
-          stop();
-          const t = setInterval(fn, cycle);
-          setTimer(t);
-        }, [fn, cycle, stop, setTimer]);
-
-        return [start, stop];
-      }
-
-      const App = () => {
-        const [list, setList] = useState(items);
-        const [cycle, setCycle] = useState(3000);
-        const [activeIndex, setActiveIndex] = useState(0);
-        const [timer, setTimer] = useState(0);
-        
-        const slideTo = useCallback((idx) => {
-          setActiveIndex(idx);
-        }, [setActiveIndex]);
-        const slideNext = useCallback(() => {
-          setActiveIndex(index => (index + 1) % list.length)
-        }, [setActiveIndex, list]);
-        const slidePrevious = useCallback(() => {
-          setActiveIndex(index => (list.length + index - 1) % list.length)
-        }, [setActiveIndex, list]);
-
-        const [start, stop] = useTimer(slideNext, cycle);
-
-        const handleControlHover = useCallback((idx) => {
-          slideTo(idx);
-          stop();
-        }, [slideTo, timer]);
-        const handleControlOut = useCallback(() => {
-          start();
-        }, [start]);
-
-        useEffect(() => {
-          start();
-
-          return () => {
-            stop();
-          }
-        }, []);
-
+      function App(props) {
         return (
-          <>
-            <SliderComponent
-              activeIndex={activeIndex}
-              onControlHover={handleControlHover}
-              onControlOut={handleControlOut}
-              onPrevious={slidePrevious}
-              onNext={slideNext}
-            >
-              { 
-                items.map((item, index) => (
-                  <SliderItemComponent
-                    key={index} 
-                    isActived={activeIndex === index}
-                    {...item}
-                  >
-                  </SliderItemComponent>
-                )) 
-              }
-            </SliderComponent>
-          </>
+          <Slider>
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide1" />
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide2" />
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3" />
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4" />
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5" />
+            <img src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6" />
+          </Slider>
         );
       }
 
-      ReactDOM.render(
-        <App />,
-        document.getElementById('root')
-      );
-
+      ReactDOM.render(<App />, document.getElementById('root'));
     </script>
-    <!--
-      Note: this page is a great way to try React but it's not suitable for production.
-      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
-
-      Read this section for a production-ready setup with JSX:
-      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
-
-      In a larger project, you can use an integrated toolchain that includes JSX instead:
-      https://reactjs.org/docs/create-a-new-react-app.html
-
-      You can also use React without JSX, in which case you can remove Babel:
-      https://reactjs.org/docs/react-without-jsx.html
-    -->
   </body>
 </html>
