@@ -1,7 +1,3 @@
-import SliderComponent from './SliderComponent';
-import SliderItemComponent from './SliderItemComponent';
+import Slider from '@/Components/Slider/Slider';
 
-export { 
-  SliderComponent,
-  SliderItemComponent
-};
+export { Slider };

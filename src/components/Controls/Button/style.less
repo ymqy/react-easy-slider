@@ -1,0 +1,38 @@
+.slider-btn {
+  width: 50px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  outline: 0;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover .slider-icon {
+    border-color: rgba(255, 255, 255, 1);
+  }
+}
+
+.slider-btn-left {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.slider-btn-right {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+}
+
+.slider-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  border-left: 2px solid rgba(255, 255, 255, 0.6);
+  transition: border 0.2s;
+}
+
+.slider-icon-left {
+  transform: rotate(45deg);
+}
+
+.slider-icon-right {
+  transform: rotate(-135deg);
+}

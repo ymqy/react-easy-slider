@@ -1,0 +1,28 @@
+.slider-list {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  touch-action: pinch-zoom pan-y;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  display: block;
+  box-sizing: border-box;
+  margin-top: auto;
+  margin-bottom: auto;
+  list-style-type: none;
+  transition: 0.5s;
+}
+
+.slide > img {
+  display: block;
+  width: 100%;
+}
+
+.slide > img:focus {
+  margin: auto;
+}

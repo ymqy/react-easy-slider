@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve'; // 查找 node 模块
+import replace from '@rollup/plugin-replace'; // 替换第三方模块 process.env 变量
 import babel from '@rollup/plugin-babel'; // rollup 和 babel 无缝集成
 import commonjs from '@rollup/plugin-commonjs'; // rollup 和 babel 无缝集成
 import typescript from '@rollup/plugin-typescript'; // 处理 ts 相关
@@ -27,6 +28,7 @@ export default {
       sourcemap: true,
       globals: {
         react: 'React',
+        'react-dom': 'ReactDOM',
       },
     },
     {
@@ -36,11 +38,16 @@ export default {
       sourcemap: true,
       globals: {
         react: 'React',
+        'react-dom': 'ReactDOM',
       },
     },
   ],
-  external: ['react'],
+  external: ['react', 'react-dom', 'prop-types'],
   plugins: [
+    replace({
+      preventAssignment: true,
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
     resolve({
       extensions: ['.ts', '.tsx'],
     }),

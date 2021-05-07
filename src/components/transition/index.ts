@@ -1,1 +1,1 @@
-export { FadeTransition as fade } from './fade-transition';
+export { FadeTransition as fade } from './FadeTransition/FadeTransition';

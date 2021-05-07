@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Easy Slider Demo</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="./dist/react-easy-slider.umd.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useCallback } = React;
+      const { Slider } = ReactEasySlider;
+      const colors = ['#3f51b5', '#eee', '#f44336', '#eee'];
+      const list = colors.slice(0, colors.length).map((color, index) => (
+        <p
+          key={index}
+          style={{
+            lineHeight: '280px',
+            fontSize: '5rem',
+            textAlign: 'center',
+            margin: 0,
+            backgroundColor: color,
+          }}
+        >
+          Page{index + 1}
+        </p>
+      ));
+
+      function App(props) {
+        const [slides, setSlides] = useState([]);
+
+        setTimeout(() => {
+          setSlides(list);
+        }, 0);
+
+        return <Slider>{slides}</Slider>;
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>
