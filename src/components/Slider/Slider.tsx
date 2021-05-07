@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import cx from 'classnames';
 import { renderControls, NextButton, PreviousButton, Indicators } from '@/Components/Controls';
-import * as Transitions from '@/Components/Transition';
+import Transition from '@/Components/Transition/Transition';
 import { useDimensions, useSliderAutoplay, useTouchEvents, useControllableState } from '@/hooks';
 import styles from './style.less';
 
@@ -16,6 +16,7 @@ const defaultProps: Partial<SliderProps> = {
   heightMode: 'max',
   initialSlideHeight: 100,
   width: '100%',
+  wrapAround: false,
   dragging: true,
   pauseOnHover: true,
   renderBottomCenterControls: (props) => <Indicators {...props} />,
@@ -37,10 +38,10 @@ function Slider(_props: SliderProps) {
     height,
     initialSlideHeight,
     wrapAround,
+    dragging,
   } = props;
 
   const slideCount = React.Children.count(children);
-  const TransitionControls = Transitions[transitionMode];
 
   const frameRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useControllableState<number>(slideIndex);
@@ -108,9 +109,11 @@ function Slider(_props: SliderProps) {
   return (
     <div className={cx(styles.slider)} style={{ width, height }}>
       <div ref={frameRef} className={cx(styles['slider-frame'])}>
-        <TransitionControls {...{ heightMode, slideHeight, slideWidth, currentSlide, slideCount }}>
+        <Transition
+          {...{ dragging, slideHeight, slideWidth, currentSlide, slideCount, transitionMode }}
+        >
           {children}
-        </TransitionControls>
+        </Transition>
       </div>
       {renderControls(props, {
         slideHeight,

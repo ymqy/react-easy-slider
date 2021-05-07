@@ -53,15 +53,15 @@ declare namespace Props {
     slideWidth: number;
     speed: number;
     swiping: boolean;
-    transitionMode: string;
+    transitionMode: 'fade' | 'scroll';
     width: string;
     withoutControls: boolean;
     wrapAround: boolean;
   }>;
 
-  type FadeTransitionProps = Pick<
+  type TransitionProps = Pick<
     SliderProps,
-    'heightMode' | 'dragging' | 'slideWidth' | 'children'
+    'dragging' | 'slideWidth' | 'transitionMode' | 'children'
   > & {
     currentSlide: number;
     slideCount: number;

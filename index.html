@@ -38,7 +38,11 @@
           setSlides(list);
         }, 0);
 
-        return <Slider>{slides}</Slider>;
+        return (
+          <Slider wrapAround transitionMode="fade">
+            {slides}
+          </Slider>
+        );
       }
 
       ReactDOM.render(<App />, document.getElementById('root'));
