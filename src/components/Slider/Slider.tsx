@@ -1,9 +1,12 @@
 import React, { useCallback, useRef } from 'react';
 import cx from 'classnames';
+import AnnounceSlide, {
+  defaultRenderAnnounceSlideMessage,
+} from '@/components/AnnounceSlide/AnnounceSlide';
 import { renderControls, NextButton, PreviousButton, Indicators } from '@/components/Controls';
 import Transition from '@/components/Transition/Transition';
 import { useDimensions, useSliderAutoplay, useControllableState } from '@/hooks';
-import { getMouseEvents, getTouchEvents } from '@/shared';
+import { getMouseEvents, getTouchEvents, addAccessibility } from '@/shared';
 import styles from './style.less';
 
 import type { SwipeEvent } from '@/shared';
@@ -21,6 +24,9 @@ const defaultProps: Partial<SliderProps> = {
   wrapAround: false,
   dragging: true,
   pauseOnHover: true,
+  prevButtonAriaLabel: 'Previous Slide',
+  nextButtonAriaLabel: 'Next Slide',
+  renderAnnounceSlideMessage: defaultRenderAnnounceSlideMessage,
   renderBottomCenterControls: (props) => <Indicators {...props} />,
   renderCenterLeftControls: (props) => <PreviousButton {...props} />,
   renderCenterRightControls: (props) => <NextButton {...props} />,
@@ -41,6 +47,7 @@ function Slider(_props: SliderProps) {
     initialSlideHeight,
     wrapAround,
     dragging,
+    renderAnnounceSlideMessage,
   } = props;
 
   const slideCount = React.Children.count(children);
@@ -113,11 +120,14 @@ function Slider(_props: SliderProps) {
 
   return (
     <div className={cx(styles.slider)} style={{ width, height }}>
+      {!autoplay && (
+        <AnnounceSlide message={renderAnnounceSlideMessage({ currentSlide, slideCount })} />
+      )}
       <div ref={frameRef} {...mouseEvents} {...touchEvents} className={cx(styles['slider-frame'])}>
         <Transition
           {...{ dragging, slideHeight, slideWidth, currentSlide, slideCount, transitionMode }}
         >
-          {children}
+          {addAccessibility(children, currentSlide)}
         </Transition>
       </div>
       {renderControls(props, {

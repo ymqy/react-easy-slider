@@ -4,6 +4,8 @@ declare namespace Props {
   type WithChildren<T = Record<string, never>> = T & { children?: React.ReactNode };
 
   type RenderControlProps = {
+    prevButtonAriaLabel?: string;
+    nextButtonAriaLabel?: string;
     slideHeight: number;
     slideCount: number;
     currentSlide: number;
@@ -39,7 +41,11 @@ declare namespace Props {
     initialSlideHeight: number;
     initialSlideWidth: number;
     pauseOnHover: boolean;
-    renderAnnounceSlideMessage?: (props: RenderControlProps) => JSX.Element;
+    prevButtonAriaLabel: string;
+    nextButtonAriaLabel: string;
+    renderAnnounceSlideMessage: (
+      props: Pick<RenderControlProps, 'currentSlide' | 'slideCount'>,
+    ) => string;
     renderBottomCenterControls?: (props: RenderControlProps) => JSX.Element;
     renderBottomLeftControls?: (props: RenderControlProps) => JSX.Element;
     renderBottomRightControls?: (props: RenderControlProps) => JSX.Element;

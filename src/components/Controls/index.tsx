@@ -24,7 +24,7 @@ function renderControls(props: SliderProps, config: RenderControlProps): React.R
 
   return controlsMap.map(({ funcName, key }) => {
     const func = props[funcName];
-    const controlChildren = typeof func === 'function' && func(config);
+    const controlChildren = typeof func === 'function' && func({ ...config, ...props });
 
     return (
       controlChildren && (
