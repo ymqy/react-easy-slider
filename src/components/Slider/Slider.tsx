@@ -2,9 +2,11 @@ import React, { useCallback, useRef } from 'react';
 import cx from 'classnames';
 import { renderControls, NextButton, PreviousButton, Indicators } from '@/Components/Controls';
 import Transition from '@/Components/Transition/Transition';
-import { useDimensions, useSliderAutoplay, useTouchEvents, useControllableState } from '@/hooks';
+import { useDimensions, useSliderAutoplay, useControllableState } from '@/hooks';
+import { getMouseEvents, getTouchEvents } from '@/shared';
 import styles from './style.less';
 
+import type { SwipeEvent } from '@/shared';
 import type { SliderProps } from '@/typings/props';
 
 const defaultProps: Partial<SliderProps> = {
@@ -86,11 +88,11 @@ function Slider(_props: SliderProps) {
     callback: nextSlide,
   });
 
-  useTouchEvents(frameRef.current, {
+  const swipeConfig = {
     swipeStart: () => {
       if (pauseOnHover) pauseAutoplay();
     },
-    swipe: (e) => {
+    swipe: (e: SwipeEvent) => {
       switch (e.direction) {
         case 'Left':
           nextSlide();
@@ -104,11 +106,14 @@ function Slider(_props: SliderProps) {
 
       if (autoplay) unpauseAutoplay();
     },
-  });
+  };
+
+  const touchEvents = getTouchEvents(swipeConfig);
+  const mouseEvents = getMouseEvents(swipeConfig);
 
   return (
     <div className={cx(styles.slider)} style={{ width, height }}>
-      <div ref={frameRef} className={cx(styles['slider-frame'])}>
+      <div ref={frameRef} {...mouseEvents} {...touchEvents} className={cx(styles['slider-frame'])}>
         <Transition
           {...{ dragging, slideHeight, slideWidth, currentSlide, slideCount, transitionMode }}
         >
