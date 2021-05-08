@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Easy Slider Demo</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="react-easy-slider.umd.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const { useState, useEffect, useCallback } = React;
+      const { Slider } = ReactEasySlider;
+      const colors = ['#3f51b5', '#eee', '#f44336', '#eee'];
+      const list = colors.slice(0, colors.length).map((color, index) => (
+        <p
+          key={index}
+          style={{
+            lineHeight: '280px',
+            fontSize: '5rem',
+            textAlign: 'center',
+            margin: 0,
+            backgroundColor: color,
+          }}
+        >
+          Page{index + 1}
+        </p>
+      ));
+
+      const images = [
+        <img
+          key="slide1"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide1"
+        />,
+        <img
+          key="slide2"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide2"
+        />,
+        <img
+          key="slide3"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3"
+        />,
+        <img
+          key="slide4"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4"
+        />,
+        <img
+          key="slide5"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5"
+        />,
+        <img
+          key="slide6"
+          // style={{ height: '280px' }}
+          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6"
+        />,
+      ];
+
+      function App(props) {
+        const [slides, setSlides] = useState([]);
+
+        console.log('🚀 ~ file: index.html ~ line 45 ~ App ~ slides', slides);
+        useEffect(() => {
+          setTimeout(() => {
+            setSlides(list);
+          }, 0);
+
+          setTimeout(() => {
+            setSlides(images);
+          }, 3000);
+        }, []);
+
+        return (
+          <Slider wrapAround transitionMode="fade">
+            {images}
+          </Slider>
+        );
+      }
+
+      ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

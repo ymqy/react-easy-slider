@@ -14,6 +14,7 @@ import type { SliderProps } from '@/typings/props';
 
 const defaultProps: Partial<SliderProps> = {
   autoplay: false,
+  autoGenerateStyleTag: true,
   autoplayInterval: 3000,
   slideIndex: 0,
   transitionMode: 'fade',
@@ -37,7 +38,6 @@ function Slider(_props: SliderProps) {
   const {
     autoplay,
     children,
-    transitionMode,
     slideIndex,
     pauseOnHover,
     autoplayInterval,
@@ -46,7 +46,6 @@ function Slider(_props: SliderProps) {
     height,
     initialSlideHeight,
     wrapAround,
-    dragging,
     renderAnnounceSlideMessage,
   } = props;
 
@@ -59,6 +58,7 @@ function Slider(_props: SliderProps) {
     currentSlide,
     initialSlideHeight,
     frame: frameRef.current,
+    children,
   });
 
   const nextSlide = useCallback(
@@ -124,13 +124,12 @@ function Slider(_props: SliderProps) {
         <AnnounceSlide message={renderAnnounceSlideMessage({ currentSlide, slideCount })} />
       )}
       <div ref={frameRef} {...mouseEvents} {...touchEvents} className={cx(styles['slider-frame'])}>
-        <Transition
-          {...{ dragging, slideHeight, slideWidth, currentSlide, slideCount, transitionMode }}
-        >
+        <Transition {...props} {...{ slideHeight, slideWidth, currentSlide, slideCount }}>
           {addAccessibility(children, currentSlide)}
         </Transition>
       </div>
-      {renderControls(props, {
+      {renderControls({
+        ...props,
         slideHeight,
         slideCount,
         currentSlide,

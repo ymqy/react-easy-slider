@@ -5,7 +5,13 @@ import styles from './style.less';
 import type { TransitionProps } from '@/typings/props';
 
 function Transition(props: TransitionProps) {
-  const { children, dragging, slideWidth: slidewidth, slideHeight: slideheight } = props;
+  const {
+    children,
+    dragging,
+    slideWidth: slidewidth,
+    slideHeight: slideheight,
+    autoGenerateStyleTag,
+  } = props;
   return (
     <div
       className={cx(styles['slider-list'])}
@@ -16,7 +22,10 @@ function Transition(props: TransitionProps) {
       }}
     >
       {React.Children.map(children, (child, index) => (
-        <div className={cx(styles.slide)} style={getSlideStyles(props, index)}>
+        <div
+          className={cx(styles.slide, autoGenerateStyleTag ? 'slide-item' : '')}
+          style={getSlideStyles(props, index)}
+        >
           {child}
         </div>
       ))}

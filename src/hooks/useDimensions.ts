@@ -3,11 +3,12 @@ import { calculateSlideHeight } from '@/shared';
 import type { SliderProps } from '@/typings/props';
 
 function useDimensions({
-  heightMode,
-  initialSlideHeight,
   frame,
+  heightMode,
   currentSlide,
-}: Pick<SliderProps, 'heightMode' | 'initialSlideHeight'> & {
+  initialSlideHeight,
+  children: childs,
+}: Pick<SliderProps, 'heightMode' | 'initialSlideHeight' | 'children'> & {
   frame: HTMLDivElement | null;
   currentSlide: number;
 }) {
@@ -22,14 +23,14 @@ function useDimensions({
       const setSlideWidthAndHeight = () => {
         setSlideWidth(frame.offsetWidth);
         setSlideHeight(calculateSlideHeight({ heightMode, initialSlideHeight }, children));
+
+        const image = getUnloadImageFromSlide(children[currentSlide]);
+        handleImageLoaded(image, ({ offsetHeight }) => setSlideHeight(offsetHeight));
       };
 
       fnRef.current = setSlideWidthAndHeight;
 
-      setSlideWidthAndHeight();
-
-      const image = getUnloadImageFromSlide(children[currentSlide]);
-      handleImageLoaded(image, ({ offsetHeight }) => setSlideHeight(offsetHeight));
+      fnRef.current();
 
       window.addEventListener('resize', fnRef.current);
     }
@@ -37,7 +38,7 @@ function useDimensions({
     return () => {
       window.removeEventListener('resize', fnRef.current as any);
     };
-  }, [frame, heightMode, initialSlideHeight, currentSlide]);
+  }, [frame, heightMode, initialSlideHeight, currentSlide, childs]);
 
   return [slideWidth, slideHeight];
 }
@@ -47,6 +48,14 @@ function handleImageLoaded(
   callback: (image: HTMLImageElement) => void,
 ) {
   if (image) {
+    if (image.complete) {
+      // 图片读取缓存无法触发 load 事件
+      setTimeout(() => {
+        callback(image);
+      }, 0);
+      return;
+    }
+
     const imageCallback = () => {
       callback(image);
       image.removeEventListener('load', imageCallback);

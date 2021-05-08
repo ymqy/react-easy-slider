@@ -15,7 +15,7 @@ const controlsMap = [
   { funcName: 'renderBottomRightControls', key: 'BottomRight' },
 ];
 
-function renderControls(props: SliderProps, config: RenderControlProps): React.ReactNode[] {
+function renderControls(props: SliderProps & RenderControlProps): React.ReactNode[] {
   const { withoutControls } = props;
 
   if (withoutControls) {
@@ -24,7 +24,7 @@ function renderControls(props: SliderProps, config: RenderControlProps): React.R
 
   return controlsMap.map(({ funcName, key }) => {
     const func = props[funcName];
-    const controlChildren = typeof func === 'function' && func({ ...config, ...props });
+    const controlChildren = typeof func === 'function' && func(props);
 
     return (
       controlChildren && (

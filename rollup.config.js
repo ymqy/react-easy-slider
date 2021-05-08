@@ -61,7 +61,9 @@ export default {
       plugins: [],
       modules: true,
     }),
-    serve(),
+    serve({
+      contentBase: ['demo', 'dist'],
+    }),
     livereload(),
   ],
 };

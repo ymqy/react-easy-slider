@@ -4,15 +4,13 @@ declare namespace Props {
   type WithChildren<T = Record<string, never>> = T & { children?: React.ReactNode };
 
   type RenderControlProps = {
-    prevButtonAriaLabel?: string;
-    nextButtonAriaLabel?: string;
     slideHeight: number;
     slideCount: number;
     currentSlide: number;
     goToSlide: (index: number) => void;
     nextSlide: () => void;
     previousSlide: () => void;
-  };
+  } & SliderProps;
 
   type SliderProps = WithChildren<{
     animation: string;
@@ -65,10 +63,7 @@ declare namespace Props {
     wrapAround: boolean;
   }>;
 
-  type TransitionProps = Pick<
-    SliderProps,
-    'dragging' | 'slideWidth' | 'transitionMode' | 'children'
-  > & {
+  type TransitionProps = SliderProps & {
     currentSlide: number;
     slideCount: number;
     slideHeight: number;
