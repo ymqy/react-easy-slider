@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import cx from 'classnames';
-import { renderControls, NextButton, PreviousButton, Indicators } from '@/Components/Controls';
-import Transition from '@/Components/Transition/Transition';
+import { renderControls, NextButton, PreviousButton, Indicators } from '@/components/Controls';
+import Transition from '@/components/Transition/Transition';
 import { useDimensions, useSliderAutoplay, useControllableState } from '@/hooks';
 import { getMouseEvents, getTouchEvents } from '@/shared';
 import styles from './style.less';

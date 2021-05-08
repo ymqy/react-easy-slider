@@ -55,10 +55,9 @@ function handleImageLoaded(
   }
 }
 
-function getUnloadImageFromSlide(childNode: ChildNode | undefined): HTMLImageElement | undefined {
-  // TODO: 去掉 any
+function getUnloadImageFromSlide(childNode: Element | undefined): HTMLImageElement | undefined {
   if (!childNode) return undefined;
-  return (childNode as any).getElementsByTagName('img')[0];
+  return childNode.getElementsByTagName('img')[0];
 }
 
 export { useDimensions };
