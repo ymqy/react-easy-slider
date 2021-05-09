@@ -13,7 +13,7 @@ function Transition(props: TransitionProps) {
     autoGenerateStyleTag,
   } = props;
   return (
-    <div
+    <ul
       className={cx(styles['slider-list'])}
       style={{
         cursor: dragging === true ? 'pointer' : 'inherit',
@@ -22,14 +22,14 @@ function Transition(props: TransitionProps) {
       }}
     >
       {React.Children.map(children, (child, index) => (
-        <div
+        <li
           className={cx(styles.slide, autoGenerateStyleTag ? 'slide-item' : '')}
           style={getSlideStyles(props, index)}
         >
           {child}
-        </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

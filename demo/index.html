@@ -32,36 +32,53 @@
       ));
 
       const images = [
-        <img
-          key="slide1"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide1"
-        />,
-        <img
-          key="slide2"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide2"
-        />,
-        <img
-          key="slide3"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3"
-        />,
-        <img
-          key="slide4"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4"
-        />,
-        <img
-          key="slide5"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5"
-        />,
-        <img
-          key="slide6"
-          // style={{ height: '280px' }}
-          src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6"
-        />,
+        <p style={{ margin: 0 }}>
+          <img
+            key="slide1"
+            style={{ width: '480px' }}
+            src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide1"
+          />
+        </p>,
+        <p style={{ margin: 0 }}>
+          <img
+            key="slide2"
+            style={{ width: '580px' }}
+            src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide2"
+          />
+        </p>,
+        <p style={{ margin: 0 }}>
+          <img
+            key="slide3"
+            style={{ width: '680px' }}
+            src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3"
+          />
+        </p>,
+        // 图片缓存测试数据
+        // <img
+        //   key="slide2"
+        //   // style={{ height: '280px' }}
+        //   src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide2"
+        // />,
+        // <img
+        //   key="slide3"
+        //   // style={{ height: '280px' }}
+        //   src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide3"
+        // />,
+        // <img
+        //   key="slide4"
+        //   // style={{ height: '280px' }}
+        //   src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide4"
+        // />,
+        // <img
+        //   key="slide5"
+        //   // style={{ height: '280px' }}
+        //   src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide5"
+        // />,
+        // <img
+        //   key="slide6"
+        //   // style={{ height: '280px' }}
+        //   src="https://via.placeholder.com/400/ffffff/c0392b/&text=slide6"
+        // />,
       ];
 
       function App(props) {
@@ -80,7 +97,7 @@
 
         return (
           <Slider wrapAround transitionMode="fade">
-            {images}
+            {slides}
           </Slider>
         );
       }

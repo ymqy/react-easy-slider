@@ -23,10 +23,10 @@ function useDimensions({
       const setSlideWidthAndHeight = () => {
         setSlideWidth(frame.offsetWidth);
         setSlideHeight(calculateSlideHeight({ heightMode, initialSlideHeight }, children));
-
-        const image = getUnloadImageFromSlide(children[currentSlide]);
-        handleImageLoaded(image, ({ offsetHeight }) => setSlideHeight(offsetHeight));
       };
+
+      const image = getUnloadImageFromSlide(children[currentSlide]);
+      handleImageLoaded(image, () => setSlideWidthAndHeight());
 
       fnRef.current = setSlideWidthAndHeight;
 
@@ -43,24 +43,18 @@ function useDimensions({
   return [slideWidth, slideHeight];
 }
 
-function handleImageLoaded(
-  image: HTMLImageElement | undefined,
-  callback: (image: HTMLImageElement) => void,
-) {
+function handleImageLoaded(image: HTMLImageElement | undefined, callback: () => void) {
   if (image) {
     if (image.complete) {
-      // 图片读取缓存无法触发 load 事件
-      setTimeout(() => {
-        callback(image);
-      }, 0);
+      setTimeout(callback, 0);
       return;
     }
 
-    const imageCallback = () => {
-      callback(image);
-      image.removeEventListener('load', imageCallback);
+    const imageLoadCallback = () => {
+      callback();
+      image.removeEventListener('load', imageLoadCallback);
     };
-    image.addEventListener('load', imageCallback);
+    image.addEventListener('load', imageLoadCallback);
   }
 }
 
