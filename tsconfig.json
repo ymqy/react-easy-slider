@@ -20,8 +20,7 @@
     "strict": true,
     "declaration": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@@/*": ["./src/.umi/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -38,5 +37,5 @@
     "jest.config.js",
     "mock/*"
   ],
-  "exclude": ["node_modules", "build", "dist", "scripts", "src/.umi/*", "webpack", "jest", "scripts/**/*"]
+  "exclude": ["node_modules", "build", "dist", "scripts", "webpack", "jest", "scripts/**/*"]
 }
