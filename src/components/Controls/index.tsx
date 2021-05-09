@@ -16,12 +16,6 @@ const controlsMap = [
 ];
 
 function renderControls(props: SliderProps & RenderControlProps): React.ReactNode[] {
-  const { withoutControls } = props;
-
-  if (withoutControls) {
-    return controlsMap.map(() => null);
-  }
-
   return controlsMap.map(({ funcName, key }) => {
     const func = props[funcName];
     const controlChildren = typeof func === 'function' && func(props);

@@ -46,6 +46,7 @@ function Slider(_props: SliderProps) {
     height,
     initialSlideHeight,
     wrapAround,
+    withoutControls,
     renderAnnounceSlideMessage,
   } = props;
 
@@ -128,15 +129,16 @@ function Slider(_props: SliderProps) {
           {addAccessibility(children, currentSlide)}
         </Transition>
       </div>
-      {renderControls({
-        ...props,
-        slideHeight,
-        slideCount,
-        currentSlide,
-        goToSlide: setCurrentSlide,
-        nextSlide,
-        previousSlide,
-      })}
+      {!withoutControls &&
+        renderControls({
+          ...props,
+          slideHeight,
+          slideCount,
+          currentSlide,
+          goToSlide: setCurrentSlide,
+          nextSlide,
+          previousSlide,
+        })}
     </div>
   );
 }
